@@ -6,9 +6,10 @@ services:
     image: postgres:11.1
     restart: always
     environment:
-      - POSTGRES_DB=db
-      - POSTGRES_USER=log
-      - POSTGRES_PASSWORD=pass
+      - TZ=Asia/Yekaterinburg
+      - POSTGRES_DB=my_database
+      - POSTGRES_USER=my_login
+      - POSTGRES_PASSWORD=my_password
       - PGDATA=/var/lib/postgresql/data/
     volumes:
       - /var/lib/postgresql/data/:/var/lib/postgresql/data/
@@ -20,6 +21,8 @@ services:
   web:
     build: ./web
     restart: always
+    environment:
+      - TZ=Asia/Yekaterinburg
     depends_on:
       - postgres1
     command: gunicorn -c gunicorn.conf MySites.wsgi
@@ -30,9 +33,11 @@ services:
     networks:
       - MySites_network
 
-  nginx:
+  nginx_new:
     build: ./nginx
     restart: always
+    environment:
+      - TZ=Asia/Yekaterinburg
     depends_on:
       - web
     ports:

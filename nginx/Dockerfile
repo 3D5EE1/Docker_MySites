@@ -1,11 +1,16 @@
 FROM nginx:latest
 
+RUN apt update && apt install -y cron rsyslog letsencrypt
+
 ADD nginx.sh /
 ADD nginx1.conf /etc/nginx/nginx.conf
 ADD nginx2.conf /
-RUN echo "30 8 * * 1    root    /usr/bin/letsencrypt renew >> /var/log/letsencrypt-renew.log" >> /etc/crontab
 
-RUN apt update  && apt install -y cron rsyslog letsencrypt
+RUN echo "* * * * *   root    date >> /data/cron_test" >> /etc/crontab
+RUN echo "30 3 * * 1    root    /usr/bin/letsencrypt renew >> /var/log/letsencrypt-renew.log" >> /etc/crontab
+
+RUN mkdir -p /data
+RUN touch /data/cron_test
 
 RUN mkdir -p /var/www/rypy
 RUN mkdir -p /var/www/media
@@ -15,7 +20,4 @@ RUN chown -R nginx:nginx /var/www/media
 RUN chown -R nginx:nginx /var/www/static
 RUN chmod 777 nginx.sh
 
-CMD nginx -g 'daemon off;'
-
 ENTRYPOINT ["sh", "/nginx.sh"]
-
