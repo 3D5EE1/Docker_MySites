@@ -91,9 +91,9 @@ WSGI_APPLICATION = 'MySites.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'my_database',
-        'USER': 'my_login',
-        'PASSWORD': 'my_password',
+        'NAME': 'db',
+        'USER': 'user',
+        'PASSWORD': 'pass',
         'HOST': 'postgres1',
         'PORT': '5432',
     }
@@ -136,8 +136,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
 STATIC_ROOT = '/MySites/static'
-
-
-
-
