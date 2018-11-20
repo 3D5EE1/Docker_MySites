@@ -1,6 +1,6 @@
 FROM python:latest
 
-ENV PYTHONBUFFERED=1
+ENV PYTHONBUFFERED 1
 ENV MY_DIR /MySites
 
 RUN mkdir -p /var/log/gunicorn
